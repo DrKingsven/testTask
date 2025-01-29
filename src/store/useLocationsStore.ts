@@ -23,17 +23,19 @@ export interface LocationsStore {
   locations: Location[];
   environments: Environment[];
   servers: Server[];
-
   fetch: () => Promise<void>;
 }
 
 export const useLocationsStore = create<LocationsStore>((set) => {
   const fetch = async () => {
-    await sleep(3000);
+    await sleep(3000);  // Эмуляция задержки
 
     const { default: data } = await import("./data.json");
+
     set({
-      ...data,
+      locations: data.locations,
+      environments: data.environments,
+      servers: data.servers,
       isLoaded: true,
     });
   };

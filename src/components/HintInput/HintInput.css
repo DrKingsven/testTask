@@ -1,0 +1,24 @@
+.parameterName {
+    font-weight: 500;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .hintBox {
+    width: 100%;
+    box-sizing: border-box; 
+    overflow: hidden; 
+  }
+  
+  .hintInput {
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
