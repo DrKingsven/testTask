@@ -10,13 +10,12 @@ import HintInput from "../HintInput/HintInput";
 
 interface TestLocationFormProps {
   store: LocationsStore;
-  index: number;
-  location: Location & { hint: string; environmentID: number };
-  onLocationChange: (index: number, locationID: number, environmentID: number, hint: string) => void;
-  onRemoveLocation: (index: number) => void;  
+  location: Location & { hint: string; environmentID: number; locationNumber: number }; 
+  onLocationChange: (locationNumber: number, locationID: number, environmentID: number, hint: string) => void;
+  onRemoveLocation: (locationNumber: number) => void;  
 }
 
-const TestLocationForm = ({ store, index, location, onLocationChange, onRemoveLocation }: TestLocationFormProps) => {
+const TestLocationForm = ({ store, location, onLocationChange, onRemoveLocation }: TestLocationFormProps) => {
   const [selectedLocationID, setSelectedLocationID] = useState<number>(location.locationID || 0);
   const [selectedEnvironmentID, setSelectedEnvironmentID] = useState<number>(location.environmentID || 0);
   const [hint, setHint] = useState<string>(location.hint || "");
@@ -40,33 +39,29 @@ const TestLocationForm = ({ store, index, location, onLocationChange, onRemoveLo
 
   const handleLocationChange = (newLocationID: number) => {
     setSelectedLocationID(newLocationID);
-    onLocationChange(index, newLocationID, selectedEnvironmentID, hint);
+    onLocationChange(location.locationNumber, newLocationID, selectedEnvironmentID, hint);
   };
 
   const handleEnvironmentChange = (newEnvironmentID: number) => {
     setSelectedEnvironmentID(newEnvironmentID);
-    onLocationChange(index, selectedLocationID, newEnvironmentID, hint);
+    onLocationChange(location.locationNumber, selectedLocationID, newEnvironmentID, hint);
   };
 
   const handleHintChange = (newHint: string) => {
     setHint(newHint);
-    onLocationChange(index, selectedLocationID, selectedEnvironmentID, newHint);
+    onLocationChange(location.locationNumber, selectedLocationID, selectedEnvironmentID, newHint);
   };
 
   return (
     <div className="list">
       <div className="headerLocation">
-        {
-        <>
-        <span> <FontAwesomeIcon icon={faVial} />Тестовая локация {index + 1}</span>
+        <span> <FontAwesomeIcon icon={faVial} />Тестовая локация номер {location.locationNumber}</span>
         <button
-        className="delete-location"
-        onClick={() => onRemoveLocation(index)}
-      >
-        <FontAwesomeIcon icon={faTrash} />
-      </button>
-      </>
-        }
+          className="delete-location"
+          onClick={() => onRemoveLocation(location.locationNumber)} 
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
       </div>
       <div className="parameterString">
         <LocationSelect store={store} setSelectedLocationID={handleLocationChange} />
@@ -79,8 +74,6 @@ const TestLocationForm = ({ store, index, location, onLocationChange, onRemoveLo
         <ServerList filteredServers={filteredServers} />
       </div>
       <HintInput hint={hint} onHintChange={handleHintChange} />
-
-      
     </div>
   );
 };
