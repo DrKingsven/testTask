@@ -11,7 +11,7 @@ const TestLocationsList = () => {
 
   useEffect(() => {
     store.fetch();
-  }, [store]);
+  }, []);
 
   const generateLocationNumber = () => {
     return Math.max(0, ...locationsList.map(location => location.locationNumber)) + 1;
